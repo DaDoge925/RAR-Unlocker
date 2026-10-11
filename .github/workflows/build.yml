@@ -17,8 +17,11 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    - name: Retarget solution
+      run: msbuild "RAR Unlocker.sln" /t:Restore /p:VCProjectVersion=17.0
+
     - name: Build solution
-      run: msbuild "RAR Unlocker.sln" /p:Configuration=Release /p:Platform=Win32
+      run: msbuild "RAR Unlocker.sln" /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v143
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
