@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
     - name: Checkout code
@@ -17,15 +17,8 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Install ATL
-      run: |
-        $vsPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
-        & "$vsPath\VC\Auxiliary\Build\vcvarsall.bat" x86
-        choco install visualstudio2022-workload-vctools --params "--add Microsoft.VisualStudio.Workload.VCTools" -y
-      shell: cmd
-
     - name: Build solution
-      run: msbuild "RAR Unlocker.sln" /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v143
+      run: msbuild "RAR Unlocker.sln" /p:Configuration=Release /p:Platform=Win32
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
